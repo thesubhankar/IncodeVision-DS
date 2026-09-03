@@ -1,6 +1,13 @@
 import os
+import sys
 import io
 import json
+
+# Ensure script directory is in sys.path for cloud deployment
+_curr_dir = os.path.dirname(os.path.abspath(__file__))
+if _curr_dir not in sys.path:
+    sys.path.insert(0, _curr_dir)
+
 import streamlit as st
 import pandas as pd
 import numpy as np
