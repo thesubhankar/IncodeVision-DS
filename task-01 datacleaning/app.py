@@ -387,27 +387,69 @@ with tab_explore:
         st.dataframe(raw_df.head(8), use_container_width=True)
 
     with c2:
-        st.markdown("**Missing Values Distribution**")
+        st.markdown("**Data Completeness & Null Analysis**")
         missing_df = pd.DataFrame(initial_health["columns"])
-        missing_filtered = missing_df[missing_df["Null Count"] > 0]
-        if not missing_filtered.empty:
-            fig_missing = px.bar(
-                missing_filtered,
-                x="Column",
-                y="Null Count",
-                color="Null %",
-                color_continuous_scale="Purples",
-                title="Nulls per Feature"
-            )
-            fig_missing.update_layout(
-                margin=dict(l=10, r=10, t=35, b=10),
-                height=280,
+        missing_filtered = missing_df[missing_df["Null Count"] > 0].sort_values(by="Null Count", ascending=True)
+        
+        total_cells = initial_health['total_rows'] * initial_health['total_cols']
+        missing_cells = initial_health['total_missing_values']
+        valid_cells = total_cells - missing_cells
+        health_pct = round((valid_cells / total_cells) * 100, 1) if total_cells > 0 else 100.0
+
+        chart_choice = st.radio(
+            "Select View Mode:",
+            ["🍩 Data Health Overview (Donut Chart)", "📊 Detailed Feature Breakdown (Horizontal)"],
+            horizontal=True,
+            label_visibility="collapsed"
+        )
+
+        if chart_choice.startswith("🍩"):
+            fig_donut = go.Figure(data=[go.Pie(
+                labels=['Valid Cells', 'Missing Cells'],
+                values=[valid_cells, missing_cells],
+                hole=0.68,
+                marker=dict(colors=['#10B981', '#EF4444']),
+                textinfo='percent',
+                textfont=dict(size=13, color='#FFFFFF'),
+                hoverinfo='label+value+percent'
+            )])
+            fig_donut.update_layout(
+                annotations=[dict(
+                    text=f"<b>{health_pct}%</b><br><span style='font-size:11px; color:#64748B;'>Complete</span>",
+                    x=0.5, y=0.5, font_size=18, showarrow=False
+                )],
+                margin=dict(l=10, r=10, t=10, b=10),
+                height=290,
+                showlegend=True,
+                legend=dict(orientation="h", yanchor="bottom", y=-0.18, xanchor="center", x=0.5),
                 paper_bgcolor='rgba(0,0,0,0)',
                 plot_bgcolor='rgba(0,0,0,0)'
             )
-            st.plotly_chart(fig_missing, use_container_width=True)
+            st.plotly_chart(fig_donut, use_container_width=True)
         else:
-            st.success("🎉 No missing values found in the raw dataset!")
+            if not missing_filtered.empty:
+                fig_horiz = go.Figure(go.Bar(
+                    x=missing_filtered["Null Count"],
+                    y=missing_filtered["Column"],
+                    orientation='h',
+                    marker=dict(
+                        color='#6366F1',
+                        line=dict(color='#4F46E5', width=1)
+                    ),
+                    text=missing_filtered.apply(lambda r: f"{r['Null Count']} ({r['Null %']}%)", axis=1),
+                    textposition='outside',
+                ))
+                fig_horiz.update_layout(
+                    margin=dict(l=10, r=40, t=15, b=10),
+                    height=290,
+                    xaxis_title="Null Count",
+                    yaxis=dict(autorange="reversed"),
+                    paper_bgcolor='rgba(0,0,0,0)',
+                    plot_bgcolor='rgba(0,0,0,0)'
+                )
+                st.plotly_chart(fig_horiz, use_container_width=True)
+            else:
+                st.success("🎉 No missing values found in the dataset!")
 
     st.markdown("**Feature Schema & Data Quality Details**")
     st.dataframe(pd.DataFrame(initial_health["columns"]), use_container_width=True)
