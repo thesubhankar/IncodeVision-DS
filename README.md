@@ -8,7 +8,7 @@ This repository contains all 4 Data Science internship tasks assigned by IncodeV
 
 | Task | Title | Status | Folder / Description |
 | :--- | :--- | :---: | :--- |
-| **Task 01** | **Data Cleaning and Preprocessing** | ✅ Completed | [`task-01 datacleaning`](./task-01%20datacleaning/) |
+| **Task 01** | **Data Cleaning and Preprocessing** | ✅ Completed | [`task-01-datacleaning`](./task-01-datacleaning/) |
 | **Task 02** | **Exploratory Data Analysis (EDA)** | ⏳ Upcoming | Summary statistics, visual patterns & correlations |
 | **Task 03** | **Sales Prediction Model** | ⏳ Upcoming | Sales forecasting using regression techniques |
 | **Task 04** | **Customer Segmentation Analysis** | ⏳ Upcoming | Customer clustering & segmentation |
@@ -17,7 +17,7 @@ This repository contains all 4 Data Science internship tasks assigned by IncodeV
 
 ## 🧹 Task 01: Data Cleaning and Preprocessing (Completed)
 
-![Task 01 Infographic](./task-01%20datacleaning/task-1.jpeg)
+![Task 01 Infographic](./task-01-datacleaning/task-1.jpeg)
 
 Created a complete automated pipeline, interactive Streamlit web application, and a step-by-step manual Jupyter notebook for cleaning raw tabular datasets.
 
