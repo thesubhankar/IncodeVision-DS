@@ -8,42 +8,134 @@ import plotly.express as px
 import plotly.graph_objects as go
 from pipeline import DataCleaningPipeline
 
-# Set Page Config
+# Page Configuration
 st.set_page_config(
-    page_title="Task-01: Data Cleaning & Preprocessing Pipeline",
+    page_title="Task-01 | Data Cleaning & Preprocessing Studio",
     page_icon="🧹",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for clean UI styling
+# Premium Modern CSS Styling
 st.markdown("""
 <style>
-    .main-header {
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+    html, body, [class*="css"] {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* Hero Banner */
+    .hero-container {
+        background: linear-gradient(135deg, #1E1B4B 0%, #312E81 50%, #4338CA 100%);
+        padding: 30px 35px;
+        border-radius: 18px;
+        color: white;
+        margin-bottom: 25px;
+        box-shadow: 0 10px 25px -5px rgba(49, 46, 129, 0.25);
+    }
+    .hero-title {
         font-size: 2.2rem;
-        font-weight: 700;
-        color: #1E3A8A;
-        margin-bottom: 0.2rem;
+        font-weight: 800;
+        margin: 0;
+        letter-spacing: -0.5px;
+        color: #FFFFFF;
     }
-    .sub-header {
+    .hero-subtitle {
         font-size: 1.05rem;
-        color: #4B5563;
-        margin-bottom: 1.5rem;
+        color: #C7D2FE;
+        margin-top: 8px;
+        margin-bottom: 16px;
+        max-width: 850px;
+        line-height: 1.5;
     }
-    .metric-box {
-        background-color: #F8FAFC;
+    .hero-badges {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+    .badge {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(8px);
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* Metric Card Styling */
+    .stat-card {
+        background: #FFFFFF;
         border: 1px solid #E2E8F0;
-        border-radius: 10px;
-        padding: 15px;
-        text-align: center;
+        border-radius: 14px;
+        padding: 18px 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
+    .stat-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    }
+    .stat-label {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #64748B;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .stat-value {
+        font-size: 1.85rem;
+        font-weight: 800;
+        color: #0F172A;
+        margin: 4px 0;
+    }
+    .stat-change {
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+    .text-positive { color: #10B981; }
+    .text-negative { color: #EF4444; }
+    .text-neutral { color: #64748B; }
+
+    /* Modern Tabs */
     .stTabs [data-baseweb="tab-list"] {
-        gap: 8px;
+        gap: 10px;
+        border-bottom: 2px solid #E2E8F0;
+        padding-bottom: 6px;
     }
     .stTabs [data-baseweb="tab"] {
-        padding: 10px 18px;
+        padding: 10px 20px;
         font-weight: 600;
-        border-radius: 6px;
+        border-radius: 8px;
+        background-color: transparent;
+        transition: all 0.2s ease;
+    }
+    .stTabs [aria-selected="true"] {
+        background-color: #EEF2FF !important;
+        color: #4F46E5 !important;
+    }
+
+    /* Sidebar Styling */
+    .sidebar-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #E2E8F0;
+    }
+    .sidebar-logo {
+        width: 44px;
+        height: 44px;
+        background: linear-gradient(135deg, #4F46E5, #06B6D4);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        color: white;
+        box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
     }
 </style>
 """, unsafe_allow_html=True)
@@ -72,112 +164,141 @@ def read_uploaded_file(uploaded_file):
         return None
 
 
-# Sidebar Controls
-st.sidebar.image("https://img.icons8.com/clouds/100/000000/data-backup.png", width=70)
-st.sidebar.title("Pipeline Controls")
+# ===================== SIDEBAR CONTROLS =====================
+with st.sidebar:
+    # Reliable modern SVG / HTML Logo that never breaks
+    st.markdown("""
+    <div class="sidebar-header">
+        <div class="sidebar-logo">🧹</div>
+        <div>
+            <h3 style="margin: 0; font-size: 1.15rem; font-weight: 700; color: #1E293B;">CleanStudio</h3>
+            <span style="font-size: 0.78rem; font-weight: 600; color: #6366F1; background: #EEF2FF; padding: 2px 8px; border-radius: 6px;">TASK 01 • INCODEVISION</span>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
-# Data Source Selection
-data_source = st.sidebar.radio(
-    "Select Dataset Source:",
-    ["Default Task Dataset", "Upload Custom Dataset (CSV/Excel)"]
-)
-
-raw_df = None
-dataset_name = ""
-
-if data_source == "Default Task Dataset":
-    raw_df = load_default_dataset()
-    dataset_name = "student_performance_updated_1000.csv"
-    if raw_df is None:
-        st.sidebar.error("Default dataset not found in current folder.")
-else:
-    uploaded_file = st.sidebar.file_uploader(
-        "Upload your CSV or Excel file:",
-        type=["csv", "xlsx", "xls"]
+    st.markdown("### 📂 Data Source")
+    data_source = st.radio(
+        "Select Dataset:",
+        ["🎯 Default Dataset (Student Performance)", "📤 Upload Custom File (CSV/Excel)"],
+        label_visibility="collapsed"
     )
-    if uploaded_file is not None:
-        raw_df = read_uploaded_file(uploaded_file)
-        dataset_name = uploaded_file.name
-    else:
-        st.sidebar.info("Upload a dataset to run the pipeline.")
 
-# Pipeline Configuration Mode
-st.sidebar.markdown("---")
-st.sidebar.subheader("Pipeline Configuration")
+    raw_df = None
+    dataset_name = ""
 
-mode = st.sidebar.radio(
-    "Choose Mode:",
-    ["Auto-Clean (Recommended)", "Custom Pipeline Settings"]
-)
-
-if mode == "Auto-Clean (Recommended)":
-    st.sidebar.caption("⚡ Auto-detects nulls, duplicates, formatting errors, and clips extreme outliers with smart statistical defaults.")
-    remove_dups = True
-    dup_subset = None
-    fix_formats = True
-    impute_nulls = True
-    numeric_strategy = "median"
-    categorical_strategy = "mode"
-    handle_outliers = True
-    outlier_method = "iqr"
-    outlier_action = "clip"
-    encode_cats = False
-    encoding_method = "label"
-    scale_nums = False
-    scaling_method = "standard"
-else:
-    with st.sidebar.expander("1. Duplicates Handling", expanded=True):
-        remove_dups = st.checkbox("Remove Duplicate Rows", value=True)
-        dup_subset_cols = []
+    if data_source.startswith("🎯"):
+        raw_df = load_default_dataset()
+        dataset_name = "student_performance_updated_1000.csv"
         if raw_df is not None:
-            use_subset = st.checkbox("Check duplicates by specific columns (e.g., ID)", value=False)
-            if use_subset:
-                dup_subset = st.multiselect("Select unique key columns:", raw_df.columns.tolist())
+            st.success("✅ Default dataset loaded (1000 rows)")
+        else:
+            st.error("Default dataset not found.")
+    else:
+        uploaded_file = st.file_uploader(
+            "Upload CSV or Excel dataset:",
+            type=["csv", "xlsx", "xls"],
+            help="Upload any tabular dataset containing missing values or duplicates."
+        )
+        if uploaded_file is not None:
+            raw_df = read_uploaded_file(uploaded_file)
+            dataset_name = uploaded_file.name
+            if raw_df is not None:
+                st.success(f"✅ Loaded: {uploaded_file.name} ({len(raw_df)} rows)")
+        else:
+            st.info("Upload a file above to begin cleaning.")
+
+    st.markdown("---")
+    st.markdown("### ⚙️ Pipeline Settings")
+
+    pipeline_mode = st.radio(
+        "Execution Mode:",
+        ["⚡ 1-Click Auto Clean (Recommended)", "🛠️ Custom Pipeline Controls"]
+    )
+
+    if pipeline_mode.startswith("⚡"):
+        st.caption("✨ Smart defaults: Removes duplicates, fixes formats, imputes missing values with median/mode, and winsorizes outliers.")
+        remove_dups = True
+        dup_subset = None
+        fix_formats = True
+        impute_nulls = True
+        numeric_strategy = "median"
+        categorical_strategy = "mode"
+        handle_outliers = True
+        outlier_method = "iqr"
+        outlier_action = "clip"
+        encode_cats = False
+        encoding_method = "label"
+        scale_nums = False
+        scaling_method = "standard"
+    else:
+        with st.expander("1. 🔁 Duplicate Records", expanded=True):
+            remove_dups = st.checkbox("Remove Duplicates", value=True)
+            if raw_df is not None and remove_dups:
+                subset_on = st.checkbox("By specific key columns only", value=False)
+                if subset_on:
+                    dup_subset = st.multiselect("Select key columns:", raw_df.columns.tolist())
+                else:
+                    dup_subset = None
             else:
                 dup_subset = None
-        else:
-            dup_subset = None
 
-    with st.sidebar.expander("2. Formats & Data Types", expanded=False):
-        fix_formats = st.checkbox("Trim whitespaces & clean strings", value=True)
-        auto_booleans = st.checkbox("Auto-standardize booleans", value=True)
+        with st.expander("2. 🔤 Formats & Cleaning", expanded=False):
+            fix_formats = st.checkbox("Trim whitespaces & clean strings", value=True)
+            auto_booleans = st.checkbox("Standardize booleans & numbers", value=True)
 
-    with st.sidebar.expander("3. Missing Values Imputation", expanded=True):
-        impute_nulls = st.checkbox("Handle Missing Values", value=True)
-        numeric_strategy = st.selectbox(
-            "Numeric Imputation Strategy:",
-            ["median", "mean", "mode", "zero", "drop"]
-        )
-        categorical_strategy = st.selectbox(
-            "Categorical Imputation Strategy:",
-            ["mode", "unknown", "drop"]
-        )
+        with st.expander("3. 🩹 Missing Value Imputation", expanded=True):
+            impute_nulls = st.checkbox("Handle Missing Values", value=True)
+            numeric_strategy = st.selectbox(
+                "Numeric Columns Strategy:",
+                ["median", "mean", "mode", "zero", "drop"],
+                index=0
+            )
+            categorical_strategy = st.selectbox(
+                "Categorical Columns Strategy:",
+                ["mode", "unknown", "drop"],
+                index=0
+            )
 
-    with st.sidebar.expander("4. Outlier Handling", expanded=False):
-        handle_outliers = st.checkbox("Detect and Treat Outliers", value=True)
-        outlier_method = st.selectbox("Detection Method:", ["iqr", "zscore"])
-        outlier_action = st.selectbox("Action on Outliers:", ["clip", "drop", "none"])
+        with st.expander("4. 🎯 Outlier Treatment", expanded=False):
+            handle_outliers = st.checkbox("Detect & Handle Outliers", value=True)
+            outlier_method = st.selectbox("Detection Method:", ["iqr", "zscore"])
+            outlier_action = st.selectbox("Action on Outliers:", ["clip", "drop", "none"])
 
-    with st.sidebar.expander("5. Machine Learning Preprocessing", expanded=False):
-        encode_cats = st.checkbox("Encode Categorical Variables", value=False)
-        encoding_method = st.selectbox("Encoding Method:", ["label", "onehot"])
-        scale_nums = st.checkbox("Scale Numerical Variables", value=False)
-        scaling_method = st.selectbox("Scaling Method:", ["standard", "minmax", "robust"])
+        with st.expander("5. 🤖 ML Feature Preprocessing", expanded=False):
+            encode_cats = st.checkbox("Encode Categorical Variables", value=False)
+            encoding_method = st.selectbox("Encoding Method:", ["label", "onehot"])
+            scale_nums = st.checkbox("Scale Numerical Variables", value=False)
+            scaling_method = st.selectbox("Scaling Method:", ["standard", "minmax", "robust"])
 
 
-# Main Content Area
-st.markdown('<div class="main-header">Task-01: Data Cleaning & Preprocessing Pipeline</div>', unsafe_allow_html=True)
-st.markdown('<div class="sub-header">Automated, robust pipeline to clean, standardize, and prepare any dataset for analytics and Machine Learning.</div>', unsafe_allow_html=True)
+# ===================== MAIN CONTENT AREA =====================
+
+# Modern Hero Banner
+st.markdown("""
+<div class="hero-container">
+    <div class="hero-title">Universal Data Cleaning & Preprocessing Studio</div>
+    <div class="hero-subtitle">
+        An intelligent, automated pipeline designed to audit, clean, standardize, and prepare raw tabular datasets for exploratory analysis and Machine Learning modeling.
+    </div>
+    <div class="hero-badges">
+        <span class="badge">🚀 Automated Pipeline</span>
+        <span class="badge">🧹 Missing Value Imputation</span>
+        <span class="badge">🔁 Duplicate Elimination</span>
+        <span class="badge">🎯 IQR Outlier Capping</span>
+        <span class="badge">📊 Plotly Interactive Visuals</span>
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
 if raw_df is None:
-    st.info("👈 Please select or upload a dataset using the sidebar to begin.")
+    st.info("👈 Please select the default dataset or upload your custom dataset from the sidebar to start.")
     st.stop()
 
-# Initialize Pipeline Engine
+# Initialize & Run Pipeline
 pipeline = DataCleaningPipeline()
 initial_health = pipeline.get_dataset_health(raw_df)
 
-# Execute Pipeline
 cleaned_df, audit_log, summary = pipeline.run_pipeline(
     raw_df,
     remove_dups=remove_dups,
@@ -196,35 +317,77 @@ cleaned_df, audit_log, summary = pipeline.run_pipeline(
 )
 final_health = summary["final"]
 
-# Top Metrics Banner
-col1, col2, col3, col4, col5 = st.columns(5)
-col1.metric("Rows", f"{final_health['total_rows']:,}", delta=f"{final_health['total_rows'] - initial_health['total_rows']:,} rows" if final_health['total_rows'] != initial_health['total_rows'] else "Unchanged")
-col2.metric("Columns", f"{final_health['total_cols']:,}", delta=f"{final_health['total_cols'] - initial_health['total_cols']:,} cols" if final_health['total_cols'] != initial_health['total_cols'] else "Unchanged")
-col3.metric("Missing Values", f"{final_health['total_missing_values']:,}", delta=f"-{initial_health['total_missing_values'] - final_health['total_missing_values']:,} fixed" if initial_health['total_missing_values'] > 0 else "0", delta_color="inverse")
-col4.metric("Duplicates Left", f"{final_health['duplicate_rows']:,}", delta=f"-{initial_health['duplicate_rows']} removed" if initial_health['duplicate_rows'] > 0 else "0", delta_color="inverse")
-col5.metric("Dataset Health", "100% Clean" if final_health['total_missing_values'] == 0 else f"{100 - final_health['missing_percentage']:.1f}%")
+# Top Interactive Metric Cards
+m_col1, m_col2, m_col3, m_col4, m_col5 = st.columns(5)
 
-st.markdown("---")
+with m_col1:
+    st.markdown(f"""
+    <div class="stat-card">
+        <div class="stat-label">Total Rows</div>
+        <div class="stat-value">{final_health['total_rows']:,}</div>
+        <div class="stat-change text-neutral">Initial: {initial_health['total_rows']:,}</div>
+    </div>
+    """, unsafe_allow_html=True)
 
-# Navigation Tabs
-tab1, tab2, tab3, tab4 = st.tabs([
-    "📊 Raw Data & Diagnostics",
-    "✨ Cleaned Dataset & Comparison",
-    "📋 Pipeline Audit Report",
-    "📥 Download & Export"
+with m_col2:
+    st.markdown(f"""
+    <div class="stat-card">
+        <div class="stat-label">Total Columns</div>
+        <div class="stat-value">{final_health['total_cols']:,}</div>
+        <div class="stat-change text-neutral">Features ready</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with m_col3:
+    fixed_nulls = initial_health['total_missing_values'] - final_health['total_missing_values']
+    st.markdown(f"""
+    <div class="stat-card">
+        <div class="stat-label">Missing Values</div>
+        <div class="stat-value">{final_health['total_missing_values']}</div>
+        <div class="stat-change text-positive">✓ {fixed_nulls:,} fixed</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with m_col4:
+    st.markdown(f"""
+    <div class="stat-card">
+        <div class="stat-label">Duplicates Left</div>
+        <div class="stat-value">{final_health['duplicate_rows']}</div>
+        <div class="stat-change text-positive">✓ Cleaned</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with m_col5:
+    health_score = 100 if final_health['total_missing_values'] == 0 else round(100 - final_health['missing_percentage'], 1)
+    st.markdown(f"""
+    <div class="stat-card">
+        <div class="stat-label">Data Quality Score</div>
+        <div class="stat-value">{health_score}%</div>
+        <div class="stat-change text-positive">✓ Optimal</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
+
+# Main Navigation Tabs
+tab_explore, tab_compare, tab_audit, tab_export = st.tabs([
+    "📊 Raw Data Diagnostics",
+    "✨ Cleaned Data & Visuals",
+    "📋 Pipeline Audit Trail",
+    "📥 Export & Download"
 ])
 
-# TAB 1: Raw Data & Diagnostics
-with tab1:
-    st.subheader(f"Raw Dataset: `{dataset_name}`")
-    
-    col_t1, col_t2 = st.columns([3, 2])
-    with col_t1:
-        st.markdown("**Sample Raw Data (First 10 Rows)**")
-        st.dataframe(raw_df.head(10), use_container_width=True)
+# ----------------- TAB 1: RAW DATA DIAGNOSTICS -----------------
+with tab_explore:
+    st.subheader(f"Raw Dataset Inspection: `{dataset_name}`")
 
-    with col_t2:
-        st.markdown("**Missing Values by Column (Raw)**")
+    c1, c2 = st.columns([3, 2])
+    with c1:
+        st.markdown("**Sample Raw Records (First 8 Rows)**")
+        st.dataframe(raw_df.head(8), use_container_width=True)
+
+    with c2:
+        st.markdown("**Missing Values Distribution**")
         missing_df = pd.DataFrame(initial_health["columns"])
         missing_filtered = missing_df[missing_df["Null Count"] > 0]
         if not missing_filtered.empty:
@@ -233,114 +396,120 @@ with tab1:
                 x="Column",
                 y="Null Count",
                 color="Null %",
-                color_continuous_scale="Reds",
-                title="Null Value Distribution per Column"
+                color_continuous_scale="Purples",
+                title="Nulls per Feature"
             )
-            fig_missing.update_layout(margin=dict(l=20, r=20, t=35, b=20), height=300)
+            fig_missing.update_layout(
+                margin=dict(l=10, r=10, t=35, b=10),
+                height=280,
+                paper_bgcolor='rgba(0,0,0,0)',
+                plot_bgcolor='rgba(0,0,0,0)'
+            )
             st.plotly_chart(fig_missing, use_container_width=True)
         else:
-            st.success("No missing values detected in the raw dataset!")
+            st.success("🎉 No missing values found in the raw dataset!")
 
-    st.markdown("**Column Diagnostics & Data Types**")
+    st.markdown("**Feature Schema & Data Quality Details**")
     st.dataframe(pd.DataFrame(initial_health["columns"]), use_container_width=True)
 
-    with st.expander("Summary Statistics (Raw Dataset)"):
-        st.dataframe(raw_df.describe(include='all').T, use_container_width=True)
 
-
-# TAB 2: Cleaned Dataset & Comparison
-with tab2:
-    st.subheader("Cleaned & Preprocessed Dataset")
-    st.dataframe(cleaned_df.head(15), use_container_width=True)
+# ----------------- TAB 2: CLEANED DATA & VISUALS -----------------
+with tab_compare:
+    st.subheader("Cleaned & Standardized Dataset")
+    st.dataframe(cleaned_df.head(10), use_container_width=True)
 
     st.markdown("---")
     st.subheader("Before vs. After Visual Comparison")
 
-    col_c1, col_c2 = st.columns(2)
-    with col_c1:
-        # Comparison of missing values
-        comp_data = {
+    v_col1, v_col2 = st.columns(2)
+
+    with v_col1:
+        comp_df = pd.DataFrame({
             "Stage": ["Raw Dataset", "Cleaned Dataset"],
             "Missing Values": [initial_health["total_missing_values"], final_health["total_missing_values"]],
-            "Duplicate Rows": [initial_health["duplicate_rows"], final_health["duplicate_rows"]]
-        }
+            "Duplicates": [initial_health["duplicate_rows"], final_health["duplicate_rows"]]
+        })
         fig_comp = px.bar(
-            pd.DataFrame(comp_data),
+            comp_df,
             x="Stage",
-            y=["Missing Values", "Duplicate Rows"],
+            y=["Missing Values", "Duplicates"],
             barmode="group",
-            title="Missing & Duplicate Values Before vs After",
+            title="Data Integrity: Before vs. After",
             color_discrete_sequence=["#EF4444", "#10B981"]
         )
-        fig_comp.update_layout(height=350, margin=dict(l=20, r=20, t=40, b=20))
+        fig_comp.update_layout(
+            height=340,
+            margin=dict(l=20, r=20, t=40, b=20),
+            paper_bgcolor='rgba(0,0,0,0)',
+            plot_bgcolor='rgba(0,0,0,0)'
+        )
         st.plotly_chart(fig_comp, use_container_width=True)
 
-    with col_c2:
-        # Numeric column distribution comparison
-        num_cols = raw_df.select_dtypes(include=[np.number]).columns.tolist()
-        if num_cols:
-            selected_num_col = st.selectbox("Inspect Numeric Distribution Before vs After:", num_cols)
+    with v_col2:
+        numeric_cols = raw_df.select_dtypes(include=[np.number]).columns.tolist()
+        if numeric_cols:
+            selected_feature = st.selectbox("Select Feature to Compare Distribution:", numeric_cols)
             fig_dist = go.Figure()
             fig_dist.add_trace(go.Histogram(
-                x=raw_df[selected_num_col].dropna(),
-                name="Before (Raw)",
+                x=raw_df[selected_feature].dropna(),
+                name="Before Cleaning",
                 opacity=0.6,
-                marker_color="#EF4444"
+                marker_color="#F43F5E"
             ))
             fig_dist.add_trace(go.Histogram(
-                x=cleaned_df[selected_num_col].dropna() if selected_num_col in cleaned_df.columns else [],
-                name="After (Cleaned)",
+                x=cleaned_df[selected_feature].dropna() if selected_feature in cleaned_df.columns else [],
+                name="After Cleaning",
                 opacity=0.6,
                 marker_color="#10B981"
             ))
             fig_dist.update_layout(
                 barmode='overlay',
-                title=f"Distribution Comparison: {selected_num_col}",
-                height=350,
-                margin=dict(l=20, r=20, t=40, b=20)
+                title=f"Distribution: {selected_feature}",
+                height=340,
+                margin=dict(l=20, r=20, t=40, b=20),
+                paper_bgcolor='rgba(0,0,0,0)',
+                plot_bgcolor='rgba(0,0,0,0)'
             )
             st.plotly_chart(fig_dist, use_container_width=True)
 
 
-# TAB 3: Pipeline Audit Report
-with tab3:
-    st.subheader("Step-by-Step Pipeline Audit Trail")
-    st.caption("Detailed log of every transformation applied to the dataset.")
+# ----------------- TAB 3: AUDIT TRAIL -----------------
+with tab_audit:
+    st.subheader("Step-by-Step Pipeline Audit Log")
+    st.caption("A chronological record of every data cleaning and transformation step executed.")
 
     for i, step in enumerate(audit_log, start=1):
-        with st.container():
-            st.markdown(f"#### Step {i}: {step['step']}")
-            st.write(f"ℹ️ **Action:** {step['details']}")
+        with st.expander(f"Step {i}: {step['step']}", expanded=(i <= 2)):
+            st.markdown(f"**Action Performed:** {step['details']}")
             if step['stats']:
                 st.json(step['stats'])
-            st.markdown("---")
 
 
-# TAB 4: Download & Export
-with tab4:
-    st.subheader("Export Cleaned Data")
-    st.write("Download the fully cleaned dataset ready for exploratory analysis, dashboards, or Machine Learning models.")
+# ----------------- TAB 4: EXPORT & DOWNLOAD -----------------
+with tab_export:
+    st.subheader("Export Cleaned Data & Pipeline Report")
+    st.markdown("Download your cleaned dataset ready for training ML models or visualizing in PowerBI / Tableau.")
 
-    col_d1, col_d2 = st.columns(2)
-    with col_d1:
-        # CSV Download
+    d_col1, d_col2 = st.columns(2)
+
+    with d_col1:
         csv_buffer = io.StringIO()
         cleaned_df.to_csv(csv_buffer, index=False)
         csv_data = csv_buffer.getvalue().encode('utf-8')
 
+        clean_filename = f"cleaned_{dataset_name if dataset_name.endswith('.csv') else dataset_name + '.csv'}"
         st.download_button(
-            label="⬇️ Download Cleaned CSV",
+            label="⬇️ Download Cleaned CSV Dataset",
             data=csv_data,
-            file_name=f"cleaned_{dataset_name if dataset_name.endswith('.csv') else dataset_name + '.csv'}",
+            file_name=clean_filename,
             mime="text/csv",
             type="primary",
             use_container_width=True
         )
 
-    with col_d2:
-        # JSON Report Download
+    with d_col2:
         report_data = {
-            "dataset_name": dataset_name,
+            "dataset": dataset_name,
             "initial_health": initial_health,
             "final_health": final_health,
             "audit_trail": audit_log
@@ -348,31 +517,31 @@ with tab4:
         json_report = json.dumps(report_data, indent=2, default=str)
 
         st.download_button(
-            label="📄 Download Cleaning Audit Report (JSON)",
+            label="📄 Download Full Audit Report (JSON)",
             data=json_report,
-            file_name=f"cleaning_audit_report_{dataset_name}.json",
+            file_name=f"audit_report_{dataset_name}.json",
             mime="application/json",
             use_container_width=True
         )
 
     st.markdown("---")
-    st.markdown("### How to Use the Pipeline in Python Code")
+    st.markdown("### 💻 Reproduce in Python Code")
     st.code(f"""from pipeline import DataCleaningPipeline
 import pandas as pd
 
-# Load any CSV
+# 1. Load dataset
 df = pd.read_csv('{dataset_name}')
 
-# Initialize pipeline and execute
+# 2. Initialize and run cleaning pipeline
 pipeline = DataCleaningPipeline()
-clean_df, audit_trail, metrics = pipeline.run_pipeline(
+clean_df, audit_log, summary = pipeline.run_pipeline(
     df,
     remove_dups=True,
     impute_nulls=True,
     handle_outliers=True
 )
 
-# Save cleaned data
-clean_df.to_csv('cleaned_{dataset_name}', index=False)
-print("Dataset successfully cleaned!")
+# 3. Export cleaned dataset
+clean_df.to_csv('{clean_filename}', index=False)
+print("Pipeline executed successfully!")
 """, language="python")
