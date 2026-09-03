@@ -17,6 +17,8 @@ This repository contains all 4 Data Science internship tasks assigned by IncodeV
 
 ## 🧹 Task 01: Data Cleaning and Preprocessing (Completed)
 
+![Task 01 Infographic](./task-01%20datacleaning/task-1.jpeg)
+
 Created a complete automated pipeline, interactive Streamlit web application, and a step-by-step manual Jupyter notebook for cleaning raw tabular datasets.
 
 - **Missing Values**: Imputed using Median (numerical) and Mode (categorical).
