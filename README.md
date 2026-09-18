@@ -10,10 +10,10 @@ This repository contains all 4 Data Science internship tasks assigned by IncodeV
 
 | Task | Title | Status | Folder / Live Demo |
 | :--- | :--- | :---: | :--- |
-| **Task 01** | **Data Cleaning and Preprocessing** | ✅ Completed | [`task-01-datacleaning`](./task-01-datacleaning/) • [🌐 **Live App**](https://incodevision-ds-pyxvzgok7nqpu2sdvq2hiy.streamlit.app/) |
-| **Task 02** | **Exploratory Data Analysis (EDA)** | ⏳ Upcoming | Summary statistics, visual patterns & correlations |
-| **Task 03** | **Sales Prediction Model** | ⏳ Upcoming | Sales forecasting using regression techniques |
-| **Task 04** | **Customer Segmentation Analysis** | ⏳ Upcoming | Customer clustering & segmentation |
+| **Task 01** | **Data Cleaning and Preprocessing** | ✅ Completed | [`Task-1(datacleaning)`](./Task-1(datacleaning)/) • [🌐 **Live App**](https://incodevision-ds-pyxvzgok7nqpu2sdvq2hiy.streamlit.app/) |
+| **Task 02** | **Exploratory Data Analysis (EDA)** | ⏳ Upcoming | [`Task-2 (EDA)`](./Task-2%20(EDA)/) |
+| **Task 03** | **Sales Prediction Model** | ⏳ Upcoming | [`Task-3 (Sales prediction model)`](./Task-3%20(Sales%20prediction%20model)/) |
+| **Task 04** | **Customer Segmentation Analysis** | ⏳ Upcoming | [`Task-4(costomer segmentation analysis)`](./Task-4(costomer%20segmentation%20analysis)/) |
 
 ---
 
@@ -21,7 +21,7 @@ This repository contains all 4 Data Science internship tasks assigned by IncodeV
 
 > 🌐 **Live Streamlit Web Application:** [https://incodevision-ds-pyxvzgok7nqpu2sdvq2hiy.streamlit.app/](https://incodevision-ds-pyxvzgok7nqpu2sdvq2hiy.streamlit.app/)
 
-![Task 01 Infographic](./task-01-datacleaning/task-1.jpeg)
+![Task 01 Infographic](./Task-1(datacleaning)/task-1.jpeg)
 
 Created a complete automated pipeline, interactive Streamlit web application, and a step-by-step manual Jupyter notebook for cleaning raw tabular datasets.
 
