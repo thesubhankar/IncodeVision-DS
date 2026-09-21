@@ -11,7 +11,7 @@ This repository contains all 4 Data Science internship tasks assigned by IncodeV
 | Task | Title | Status | Folder / Live Demo |
 | :--- | :--- | :---: | :--- |
 | **Task 01** | **Data Cleaning and Preprocessing** | ✅ Completed | [`Task-1(datacleaning)`](./Task-1(datacleaning)/) • [🌐 **Live App**](https://incodevision-ds-pyxvzgok7nqpu2sdvq2hiy.streamlit.app/) |
-| **Task 02** | **Exploratory Data Analysis (EDA)** | ⏳ Upcoming | [`Task-2 (EDA)`](./Task-2%20(EDA)/) |
+| **Task 02** | **Exploratory Data Analysis (EDA)** | ✅ Completed | [`Task-2 (EDA)`](./Task-2%20(EDA)/) |
 | **Task 03** | **Sales Prediction Model** | ⏳ Upcoming | [`Task-3 (Sales prediction model)`](./Task-3%20(Sales%20prediction%20model)/) |
 | **Task 04** | **Customer Segmentation Analysis** | ⏳ Upcoming | [`Task-4(costomer segmentation analysis)`](./Task-4(costomer%20segmentation%20analysis)/) |
 
@@ -38,8 +38,21 @@ Created a complete automated pipeline, interactive Streamlit web application, an
 
 ---
 
-## 📊 Task 02: Exploratory Data Analysis (EDA)
-*Upcoming — Analyzing distributions, bar charts, histograms, correlation plots, and extracting data insights.*
+## 📊 Task 02: Exploratory Data Analysis (EDA) (Completed)
+
+![Task 02 Infographic](./Task-2%20(EDA)/task-2.jpeg)
+
+Performed comprehensive Exploratory Data Analysis (EDA) to discover distributions, trends, correlations, and predictive patterns.
+
+- **Statistical Profiling**: Computed Mean, Median, Standard Deviation, Skewness, and Kurtosis across all metrics.
+- **Univariate Analysis**: Histograms with KDE curves and categorical distribution bar plots.
+- **Bivariate Analysis**: Scatter plots with regression trendlines, boxplots & violin plots across parental support levels and gender.
+- **Multivariate Analysis**: Annotated Pearson & Spearman Correlation Heatmap matrices and multi-feature pairplot grids.
+- **Key Insights**: Identified `PreviousGrade`, `AttendanceRate`, and `ParentalSupport` as the primary drivers of student academic performance.
+- **Files Included**:
+  - `task2_eda_analysis.ipynb`: Fully executed Jupyter Notebook with embedded charts and narrative findings.
+  - `student_performance.csv`: Cleaned dataset used for analysis.
+  - `task-2.jpeg`: High-resolution EDA workflow infographic poster.
 
 ---
 
