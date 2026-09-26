@@ -177,8 +177,8 @@ with st.sidebar:
     <div class="sidebar-header">
         <div class="sidebar-logo">📊</div>
         <div>
-            <h3 style="margin: 0; font-size: 1.15rem; font-weight: 700; color: #1E293B;">EDA Studio</h3>
-            <span style="font-size: 0.78rem; font-weight: 600; color: #0284C7; background: #E0F2FE; padding: 2px 8px; border-radius: 6px;">TASK 02 • INCODEVISION</span>
+            <h3 style="margin: 0; font-size: 1.25rem; font-weight: 800; background: linear-gradient(90deg, #0284C7, #0D9488); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">EDA Studio</h3>
+            <span style="font-size: 0.78rem; font-weight: 700; color: #FFFFFF; background: #0284C7; padding: 3px 9px; border-radius: 6px; letter-spacing: 0.5px;">TASK 02 • INCODEVISION</span>
         </div>
     </div>
     """, unsafe_allow_html=True)

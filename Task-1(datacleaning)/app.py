@@ -178,8 +178,8 @@ with st.sidebar:
     <div class="sidebar-header">
         <div class="sidebar-logo">🧹</div>
         <div>
-            <h3 style="margin: 0; font-size: 1.15rem; font-weight: 700; color: #1E293B;">CleanStudio</h3>
-            <span style="font-size: 0.78rem; font-weight: 600; color: #6366F1; background: #EEF2FF; padding: 2px 8px; border-radius: 6px;">TASK 01 • INCODEVISION</span>
+            <h3 style="margin: 0; font-size: 1.25rem; font-weight: 800; background: linear-gradient(90deg, #6366F1, #06B6D4); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">CleanStudio</h3>
+            <span style="font-size: 0.78rem; font-weight: 700; color: #FFFFFF; background: #6366F1; padding: 3px 9px; border-radius: 6px; letter-spacing: 0.5px;">TASK 01 • INCODEVISION</span>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -284,7 +284,7 @@ with st.sidebar:
 # Modern Hero Banner
 st.markdown("""
 <div class="hero-container">
-    <div class="hero-title">Universal Data Cleaning & Preprocessing Studio</div>
+    <div class="hero-title">Task - 01 (Universal Data Cleaning & Preprocessing Studio)</div>
     <div class="hero-subtitle">
         An intelligent, automated pipeline designed to audit, clean, standardize, and prepare raw tabular datasets for exploratory analysis and Machine Learning modeling.
     </div>
