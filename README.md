@@ -14,7 +14,7 @@ This repository contains all 4 Data Science internship tasks assigned by IncodeV
 | Task | Title | Status | Folder / Live Demo |
 | :--- | :--- | :---: | :--- |
 | **Task 01** | **Data Cleaning and Preprocessing** | ✅ Completed | [`Task-1(datacleaning)`](./Task-1(datacleaning)/) • [🌐 **Data Cleaning Dashboard (Live)**](https://incodevision-ds-pyxvzgok7nqpu2sdvq2hiy.streamlit.app/) |
-| **Task 02** | **Exploratory Data Analysis (EDA)** | ✅ Completed | [`Task-2 (EDA)`](./Task-2%20(EDA)/) |
+| **Task 02** | **Exploratory Data Analysis (EDA)** | ✅ Completed | [`Task-2 (EDA)`](./Task-2%20(EDA)/) • [📊 **EDA Studio Dashboard**](./Task-2%20(EDA)/app.py) |
 | **Task 03** | **Sales Prediction Model** | ⏳ Upcoming | [`Task-3 (Sales prediction model)`](./Task-3%20(Sales%20prediction%20model)/) |
 | **Task 04** | **Customer Segmentation Analysis** | ⏳ Upcoming | [`Task-4(costomer segmentation analysis)`](./Task-4(costomer%20segmentation%20analysis)/) |
 
@@ -44,18 +44,24 @@ Created a complete automated pipeline, interactive Streamlit web application, an
 
 ## 📊 Task 02: Exploratory Data Analysis (EDA) (Completed)
 
+> 📊 **Interactive EDA Dashboard:** Launch the Streamlit EDA Studio (`Task-2 (EDA)/app.py`) or double-click `run_app.bat` to explore distributions, correlations, and dynamic demographic filters in real-time.
+
 ![Task 02 Infographic](./Task-2%20(EDA)/task-2.jpeg)
 
-Performed comprehensive Exploratory Data Analysis (EDA) to discover distributions, trends, correlations, and predictive patterns.
+Performed comprehensive Exploratory Data Analysis (EDA) and built an interactive visual analytics dashboard to discover distributions, trends, correlations, and predictive patterns.
 
-- **Statistical Profiling**: Computed Mean, Median, Standard Deviation, Skewness, and Kurtosis across all metrics.
-- **Univariate Analysis**: Histograms with KDE curves and categorical distribution bar plots.
-- **Bivariate Analysis**: Scatter plots with regression trendlines, boxplots & violin plots across parental support levels and gender.
-- **Multivariate Analysis**: Annotated Pearson & Spearman Correlation Heatmap matrices and multi-feature pairplot grids.
-- **Key Insights**: Identified `PreviousGrade`, `AttendanceRate`, and `ParentalSupport` as the primary drivers of student academic performance.
+- **EDA Dashboard Features**:
+  - **KPI Scorecard**: Real-time metrics for Total Records, Average Final Grade, Attendance Rate, Study Hours, and Passing Rate.
+  - **Univariate Distributions**: Interactive Plotly Histograms with KDE curves, boxplots, violin plots, and categorical donut/bar charts.
+  - **Bivariate & Target Analysis**: Scatter plots with OLS linear regression trendlines, R² correlation indicators, and category group-by tables.
+  - **Multivariate & Correlation**: Interactive Pearson & Spearman Heatmaps, Predictive Strength Ranking, and 3D Interactive Feature Scatter.
+  - **Automated Insights**: Dynamic identification of academic performance drivers (Parental Support multiplier, attendance thresholds).
+  - **Export Studio**: Download filtered cohort datasets (CSV) and full EDA summary reports (JSON).
 - **Files Included**:
+  - `app.py`: Interactive Streamlit Exploratory Data Analysis Dashboard.
+  - `run_app.bat`: 1-Click double-click launcher for the EDA Dashboard.
   - `task2_eda_analysis.ipynb`: Fully executed Jupyter Notebook with embedded charts and narrative findings.
-  - `student_performance.csv`: Cleaned dataset used for analysis.
+  - `student_performance.csv`: Dataset used for analysis.
   - `task-2.jpeg`: High-resolution EDA workflow infographic poster.
 
 ---
